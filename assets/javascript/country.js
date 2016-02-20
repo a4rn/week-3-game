@@ -11,7 +11,6 @@ var countries_A = [
 
 
 var machine_Pick;
-// var hangbox1 = "<div id='hangbox1'></div>";
 var nameline1 = "<div id='nameline1'></div>";
 var letterbox1 = "<div id='letterbox1'></div>";
 var userGuess = [];
