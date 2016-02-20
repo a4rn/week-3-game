@@ -1,0 +1,91 @@
+
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+  background-image: url("../images/world_map.jpg");
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+
+}
+
+.jumbotron {
+	opacity: 0.6;
+}
+
+h1, p {
+	text-align: center;
+	font-weight: bolder;
+}
+
+p {
+	color:	red;
+  font-weight: bolder;
+}
+
+h2 {
+  color: blue;
+  font-size: 30px;
+}
+
+
+#hangbox {
+    display: inline;
+    width: 300px;
+    height: 300px;
+    /*border: 3px solid #ccc;*/
+    position: absolute;
+    /*border-style: solid;*/
+
+}
+
+#nameline1 {
+	margin-top: 1%;
+	margin-left: 30%;
+
+	padding: 30px;
+  width: 700px;
+  height: 30px;
+  text-align: left;
+  position: relative;
+  
+   
+}    
+
+ #nameline1 p {
+ 	font-size: 40px;
+ }   
+   
+
+
+#letterbox1 {
+		padding: 5px;
+    width: 30px;
+    height: 50px;
+    border: 3px solid #ccc;
+    margin-bottom: 400px;
+   
+}
+
+#scores {
+
+  width: 300px;
+  height: 50px;
+  /*border: 3px solid #ccc;*/
+
+#scores h2 {
+  color: blue;
+}  
+
+}
