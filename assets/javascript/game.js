@@ -8,14 +8,17 @@ var winctr = 0;
 var lossctr = 0;
 var correctguess = 0;
 var game_end = false;
+var noofSpaces = 0;
 var winner_snd = new Audio('assets/images/clap.mp3');
 var looser_snd = new Audio('assets/images/sad.wav');
+var err_snd = new Audio('assets/images/ErrorSnd.mp3');
 
 
 document.onkeyup = function(event) {
+	
 	var userGuessChar = String.fromCharCode(event.keyCode).toUpperCase();
-    var indexNo;
-   
+    var indexNo; 
+
 
     if  (!check_prev_Guess(userGuessChar)) {
     	if (correct_Answer(userGuessChar)) {
@@ -25,13 +28,13 @@ document.onkeyup = function(event) {
 					dispName[i] = userGuessChar;
 				}
 			}
-			if (correctguess === machine_Pick.length) {
+			if ((correctguess === machine_Pick.length) ||
+			   (correctguess === machine_Pick.length-noofSpaces)) {
  				winctr++;
- 				correctguess=0; err_Guess=0;
+ 				correctguess=0; err_Guess=0; noofSpaces=0;
  				game_end = true;
- 				winner_snd.play();
  				alertTxt = "You Win! ";
-
+ 				console.log(dispName);
 			}
 		}
 
@@ -39,21 +42,40 @@ document.onkeyup = function(event) {
 		for (var i = 0; i < machine_Pick.length; i++) {
 			if (dispName[i]) {
 				html1 = html1 + dispName[i] + "  ";
-			} else 
-				html1 = html1 + "<b><strong>__</strong></b>" + "  ";
+			} else {
+					if (machine_Pick[i] !== " ") {
+						html1 = html1 + "<b><strong>__</strong></b>" + "    ";
+					}	
+					else 
+						html1 = html1 + "<br>";
+					}
+			  
+				
 		}
+
 		country = "<h2> " + html1 + " </h2>";
     	document.querySelector('#nameline').innerHTML = country;
     	if (game_end) {
+    		
+	    	if (err_Guess == 7) {
+	    	
+	    		looser_snd.play();
+    		}
+    			else {
+    					winner_snd.play();
+    			}
+    		
     		document.querySelector('#scores').innerHTML = 
 	    	"<h2>WIN  : " + winctr.toString()  +  "    LOSS : " + lossctr + "</h2>";
-	    	if (err_Guess == 7) {
-    			looser_snd.play();
-    		}
-    	    newgame = confirm(alertTxt + "  Click Ok or Press Enter for a new game");
+
+    	    newgame =  confirm(alertTxt + "  Click Ok or Press Enter for a new game");
     	    if (newgame = true) {
     	     	startGame()
-    	     }
+    	    }
+    	    else {
+    	    	endGame();
+    	    }
+
     	}
     } 
 }
@@ -71,21 +93,29 @@ function check_prev_Guess(key_press) {
 }
 
 function correct_Answer(key_press) {
+	var img = document.getElementById('hangman_img');
+
 	if (machine_Pick.indexOf(key_press) == -1) {
 		err_Guess++;
-		var img = document.getElementById('hangman_img');
+		
  		if (err_Guess == 1) {
  			img.src = "assets/images/hangmana.png";
+ 			err_snd.play();
  		}else if (err_Guess == 2) {	
  			img.src = "assets/images/hangmanb.png";
+ 			err_snd.play();
 		}else if (err_Guess == 3) {	
 			img.src = "assets/images/hangmanc.png";
+			err_snd.play();
 		}else if (err_Guess == 4) {	
 			img.src = "assets/images/hangmand.png";
+			err_snd.play();
  		}else if (err_Guess == 5) {	
 			img.src = "assets/images/hangmane.png";
+			err_snd.play();
 		}else if (err_Guess == 6) {	
 			img.src = "assets/images/hangmanf.png";	
+			err_snd.play();
 		}else if (err_Guess == 7) {	
 			img.src = "assets/images/hangmang.png";	
 			lossctr++;	
@@ -115,12 +145,19 @@ function startGame() {
  	img.src = "assets/images/hangman0.png";
 
 	document.getElementById('hangbox').style.display = "visible";
- 	document.getElementById('hangman_img').style.display = "inline";
+	document.getElementById('hangman_img').style.display = "inline";
  	document.getElementById('hangman_img').style.border = "2px solid #333";
  	document.getElementById('hangman_img').style.float = "left";
 
 	for (var i = 0; i < machine_Pick.length; i++) {
-		html1 = html1 + "<b><strong>__</strong></b>" + "    ";
+		if (machine_Pick[i] !== " ") {
+			html1 = html1 + "<b><strong>__</strong></b>" + "    ";
+		}	
+		else {
+			noofSpaces++;
+			html1 = html1 + "<br>";
+		}
+
 	}
 
     country = "<h2> " + html1 + " </h2>";
@@ -129,6 +166,12 @@ function startGame() {
     document.querySelector('#scores').innerHTML = 
      "<h2>WIN  : " + winctr  + 
      "    LOSS : " + lossctr + "</h2>";
+
+ };
+
+
+function endGame() {
+	window.close();
 
  };
 
