@@ -164,7 +164,6 @@ var countries_A = [
 ,'Venezuela'
 ,'Vietnam'
 ,'Virgin Islands'
-,'Wallis and Futuna'
 ,'West Bank'
 ,'Western Sahara'
 ,'Yemen'
