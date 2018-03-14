@@ -19,15 +19,10 @@ document.onkeyup = function(event) {
 	var userGuessChar = String.fromCharCode(event.keyCode).toUpperCase();
     var indexNo; 
 
-
     if  (!check_prev_Guess(userGuessChar)) {
     	if (correct_Answer(userGuessChar)) {
-    		for (var i = 0; i < machine_Pick.length; i++) {
-				if (machine_Pick[i] === userGuessChar) {
-					correctguess++;
-					dispName[i] = userGuessChar;
-				}
-			}
+    		display_userGuess (userGuessChar) 
+    		
 			if ((correctguess === machine_Pick.length) ||
 			   (correctguess === machine_Pick.length-noofSpaces)) {
  				winctr++;
@@ -38,32 +33,12 @@ document.onkeyup = function(event) {
 			}
 		}
 
-    	var html1 = "";
-		for (var i = 0; i < machine_Pick.length; i++) {
-			if (dispName[i]) {
-				html1 = html1 + dispName[i] + "  ";
-			} else {
-					if (machine_Pick[i] !== " ") {
-						html1 = html1 + "<b><strong>__</strong></b>" + "    ";
-					}	
-					else 
-						html1 = html1 + "<br>";
-					}
-			  
-				
-		}
-
-		country = "<h2> " + html1 + " </h2>";
-    	document.querySelector('#nameline').innerHTML = country;
     	if (game_end) {
-    		
-	    	if (err_Guess == 7) {
-	    	
+    		if (err_Guess == 7) {
 	    		looser_snd.play();
+    		}else {
+    			winner_snd.play();
     		}
-    			else {
-    					winner_snd.play();
-    			}
     		
     		document.querySelector('#scores').innerHTML = 
 	    	"<h2>WIN  : " + winctr.toString()  +  "    LOSS : " + lossctr + "</h2>";
@@ -75,11 +50,37 @@ document.onkeyup = function(event) {
     	    else {
     	    	endGame();
     	    }
-
     	}
     } 
 }
        
+function display_userGuess (keypress) {
+
+var html1 = "";
+for (var i = 0; i < machine_Pick.length; i++) {
+	if (machine_Pick[i] === keypress) {
+		correctguess++;
+		dispName[i] = keypress;
+	}
+}
+
+for (var i = 0; i < machine_Pick.length; i++) {
+	if (dispName[i]) {
+		html1 = html1 + dispName[i] + "  ";
+	} else {
+		if (machine_Pick[i] !== " ") {
+			html1 = html1 + "<b><strong>__</strong></b>" + "    ";
+		} else {
+			html1 = html1 + "<br>";
+		}
+	}
+}
+
+country = "<h2> " + html1 + " </h2>";
+document.querySelector('#nameline').innerHTML = country;
+
+}
+
 
 function check_prev_Guess(key_press) {
 	if (userGuess.indexOf(key_press) == -1) {
